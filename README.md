@@ -18,6 +18,11 @@ import { formatNPR, toWords, isValidMobile } from '@sandeshthapa07/nepal-utils';
 import { formatNPR } from '@sandeshthapa07/nepal-utils/currency';
 ```
 
+Full documentation, with every option and edge case, is in [`docs/`](docs/README.md):
+- [Currency](docs/currency.md)
+- [Numerals](docs/numerals.md)
+- [Validators](docs/validators.md)
+
 ## Currency
 
 ```ts
@@ -65,7 +70,8 @@ toWords(12.5, { currency: false });       // 'Twelve Point Five'
 toNepaliDigits('Rs. 1,234');     // 'Rs. १,२३४'
 toEnglishDigits('९८४१२३४५६७');   // '9841234567'
 hasDevanagari('hello नमस्ते');    // true
-isDevanagari('नमस्ते, संसार!');   // true  (no Latin letters or ASCII digits)
+isDevanagari('नमस्ते, संसार!');   // true
+isDevanagari('नमस्ते world');     // false
 ```
 
 ## Validators
@@ -135,10 +141,12 @@ A PAN is 9 digits. VAT numbers use the same PAN. Only the format is checked, bec
 ## Development
 
 ```sh
-npm test            # vitest
-npm run typecheck   # tsc --noEmit
+npm test            # vitest: unit tests + every example in README.md and docs/
+npm run typecheck   # tsc on src/ and tests/
 npm run build       # tsup → dist/ (ESM + CJS + .d.ts)
 ```
+
+`tests/docs.test.ts` runs every `expression; // expected` line in the `ts` code blocks of this README and `docs/`. If you change behaviour, update the docs too, or the tests fail.
 
 TypeScript is pinned to 6.x because tsup's type-declaration build needs the TypeScript compiler API, which TypeScript 7 does not ship.
 
